@@ -1,0 +1,1 @@
+set(ORDERED_PATHS "/opt/ros/kinetic/lib;/home/guoziwei/myslam/Sophus/build")

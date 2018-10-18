@@ -1,0 +1,8 @@
+prefix=/home/guoziwei/ROS/install
+
+Name: chefbot
+Description: Description of chefbot
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/guoziwei/ROS/install/lib 
+Requires: 

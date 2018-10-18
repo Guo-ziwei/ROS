@@ -1,0 +1,8 @@
+prefix=/home/guoziwei/ROS/install
+
+Name: rqt_svo
+Description: Description of rqt_svo
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/guoziwei/ROS/install/lib 
+Requires: 

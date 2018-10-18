@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- this launch file corresponds to robot model in ros-pkg/robot_descriptions/pr2/erratic_defs/robots for full erratic -->
+
+  <!--param name="/use_sim_time" value="true" /-->
+
+  <!-- start up wg world >
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="worlds/world_table.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+    </include-->
+  
+
+
+    
+    <node pkg="chapter6" type="odom" name="odom_broadcaster"></node>
+    <arg name="model" />      
+    <arg name="gui" default="False" /> 
+    <param name="robot_description" 
+	    command="$(find xacro)/xacro --inorder '$(find myrobot)/robot_description/urdf/robot.xacro'"/>
+      <param name="use_gui" value="$(arg gui)"/> 
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
+  <!-- start robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
+    <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.rviz" />
+  <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
+    <!--remap from="scan" to="/robot/laser/scan"/-->
+    <param name="base_frame" value="base_link"/>
+    <param name="maxUrange" value="12.0"/>
+  </node >
+	
+</launch>

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- this launch file corresponds to robot model in ros-pkg/robot_descriptions/pr2/erratic_defs/robots for full erratic -->
+
+  <param name="/use_sim_time" value="true" />
+  <!-- start up wg world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="worlds/a315.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+    </include>
+  <param name="robot_description" 
+	 command="$(find xacro)/xacro --inorder '$(find chapter4)/robot_description/urdf/smartcar.xacro'" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
+  <!-- start robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
+    <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+    <!--node pkg="chapter5" type="odometry" name="odom_broadcaster"></node-->
+  
+
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	  args="-urdf -model smartcar -param robot_description -z 1 -model robot_model"/> 
+    <!--node pkg="robot_localization" type="ekf_localization_node" name="robot_ekf_localization" >
+    <param name="frequency" value="20.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="map_frame" value="map"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_link_frame" value="base_link"/>
+    <param name="world_frame" value="odom"/>
+    <param name="odom0" value="/odom"/>
+    <param name="imu0" value="/imu_data"/>
+    <rosparam param="odom0_config">[true,  true,  false, 
+                                      false, false, true, 
+                                      true, true, false, 
+                                      false, false, true,
+                                      false, false, false]</rosparam>
+
+    <rosparam param="imu0_config">[false, false, false, 
+                                     true,  true,  true, 
+                                     false, false, false, 
+                                     true,  true,  true,
+                                     true, true, true]</rosparam>
+    </node>
+  <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher" output="screen">
+      
+      <param name="fixed_frame" value="odom"/>
+      <param name="use_imu" value="false"/>
+      <param name="use_odom" value="false"/>
+      <param name="kf_dist_linear" value="0.50"/>
+  </node-->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.rviz" />
+  <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
+    <remap from="scan" to="/robot/laser/scan" />
+    <param name="base_frame" value="base_link"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="max_Urange" value="12.0"/>
+    <param name="linearUpdate" value="0.1"/>
+    <param name="angularUpdate" value="0.40"/>
+    <param name="xmin" value="-15.0"/>
+    <param name="ymin" value="-15.0"/>
+    <param name="xmax" value="20.0"/>
+    <param name="ymax" value="20.0"/>
+  </node>
+	
+</launch>

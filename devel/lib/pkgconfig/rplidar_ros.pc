@@ -1,0 +1,8 @@
+prefix=/home/guoziwei/ROS/devel
+
+Name: rplidar_ros
+Description: Description of rplidar_ros
+Version: 1.7.0
+Cflags: 
+Libs: -L/home/guoziwei/ROS/devel/lib 
+Requires: 

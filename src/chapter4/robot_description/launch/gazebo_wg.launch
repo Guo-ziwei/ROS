@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+   <include file="$(find gazebo_ros)/launch/willowgarage_world.launch" /> 
+  
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  
+  <param name="robot" 
+	 command="$(find xacro)/xacro.py '$(find chapter4)/robot_description/urdf/smartcar.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model smartcar -param robot -z 0.5"/> 
+
+</launch>

@@ -1,0 +1,2 @@
+chapter4:chapter5:chapter6:chefbot:hello_ros:libuvc_ros/libuvc_camera:libuvc_ros/libuvc_ros:myrobot:opencv_t:rplidar_ros:simiulate:slam
+-DCMAKE_BUILD_TYPE=Debug -DCATKIN_DEVEL_PREFIX=/home/guoziwei/ROS/devel -DCMAKE_INSTALL_PREFIX=/home/guoziwei/ROS/install -G Unix Makefiles
