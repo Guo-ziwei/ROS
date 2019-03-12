@@ -29,7 +29,6 @@
     </node>
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.rviz" />
   <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
-    <!--remap from="scan" to="/robot/laser/scan"/-->
     <param name="base_frame" value="base_link"/>
     <param name="maxUrange" value="12.0"/>
   </node >
